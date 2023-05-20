@@ -9,6 +9,30 @@ import {
 } from "react-router-dom";
 import "./style.css";
   
+interface IItemData{
+    center: string,
+    date_created: string,
+    description: string,
+    keywords: string[],
+    location: string,
+    media_type: string,
+    nasa_id: string,
+    photographer: string,
+    title: string
+}
+
+interface IItemLink{
+    href: string,
+    rel: string,
+    render: string  
+}
+
+interface IItem{
+    data: IItemData[],
+    href: string,
+    links: IItemLink[]
+}
+
 export function App(){
     const router = createBrowserRouter([
         {
@@ -27,7 +51,7 @@ export function ItemPage(){
     const navigation = useNavigation();
     const params = useParams();
     console.log(navigation, params);
-    const [item, setItem] = useState<any>();
+    const [item, setItem] = useState<IItem>();
     const [resources, setResources] = useState<Array<string>>();
     useEffect(()=>{
         getById(params?.['id']).then((response)=>{
@@ -118,7 +142,7 @@ export function MainPage(){
                 {
                     (()=>{
                         if (results && Array.isArray(results.items)){
-                            return results.items.map((item: any)=>{
+                            return results.items.map((item: IItem)=>{
                                 return (
                                     <div>
                                         <h3>
