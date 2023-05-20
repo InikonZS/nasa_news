@@ -15,12 +15,17 @@ const config = {
     entry: './src/index.ts',
     devtool: 'source-map',
     output: {
+        publicPath: "/",
         path: path.resolve(__dirname, 'dist'),
     },
     devServer: {
         open: true,
         host: 'localhost',
-    },
+        historyApiFallback: {
+            index: 'http://localhost:8080/'
+        }
+},
+    
     plugins: [
         new HtmlWebpackPlugin({
             template: 'index.html',
