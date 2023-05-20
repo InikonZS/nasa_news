@@ -36,13 +36,14 @@ export function ItemPage(){
 export function MainPage(){
     const [searchQuery, setSearchQuery] = useState('');
     const [searchInput, setSearchInput] = useState('');
+    const [page, setPage] = useState(1);
     const [results, setResults] = useState<any>();
     useEffect(()=>{
-        search(searchQuery).then((response)=>{
+        search(searchQuery, page).then((response)=>{
             setResults(response.collection);
             console.log(response);
         });
-    }, [searchQuery]);
+    }, [searchQuery, page]);
     return (<>
         <div>
             <input type="text" onChange={(e)=>{
@@ -73,6 +74,21 @@ export function MainPage(){
                             return 'no results'
                         }
                     })()
+                }
+            </div>
+            <div>
+                {   <>
+                    <div>total {
+                       Math.ceil((results?.metadata.total_hits || 0) / 100)
+                    }</div>
+                    {new Array(Math.ceil((results?.metadata?.total_hits || 0) / 100)).fill(null).map((_, index)=>{
+                        return <button onClick={()=>{
+                            setPage(index + 1);
+                        }}>
+                            {index + 1}
+                        </button>
+                    })}
+                    </>
                 }
             </div>
         </div>
