@@ -52,20 +52,38 @@ export function MainPage(){
     const [searchQuery, setSearchQuery] = useState('');
     const [searchInput, setSearchInput] = useState('');
     const [page, setPage] = useState(1);
-    const [results, setResults] = useState<any>();
+    const [results, setResults] = useState<any>();    
+    const [yearStartInput, setYearStartInput] = useState<null | number>();
+    const [yearEndInput, setYearEndInput] = useState<null | number>();
+    const [yearStart, setYearStart] = useState<null | number>();
+    const [yearEnd, setYearEnd] = useState<null | number>();
     useEffect(()=>{
-        search(searchQuery, page).then((response)=>{
+        search(searchQuery, page, yearStart, yearEnd).then((response)=>{
             setResults(response.collection);
             console.log(response);
         });
-    }, [searchQuery, page]);
+    }, [searchQuery, page, yearStart, yearEnd]);
+
+
     return (<>
         <div>
             <input type="text" onChange={(e)=>{
                 setSearchInput(e.target.value);
             }}/>
+            <label htmlFor='year-start'>from year</label>
+            <input id='year-start' type="text" onChange={(e)=>{
+                console.log(Number.parseInt(e.target.value));
+                setYearStartInput(Number.parseInt(e.target.value));
+            }}/>
+
+            <label htmlFor='year-end'>to year</label>
+            <input id='year-end' type="text" onChange={(e)=>{
+                setYearEndInput(Number.parseInt(e.target.value));
+            }}/>
             <button onClick={()=>{
                 setSearchQuery(searchInput);
+                setYearEnd(yearEndInput);
+                setYearStart(yearStartInput);
             }}>search</button>
             <div>
                 {
@@ -78,7 +96,7 @@ export function MainPage(){
                                             {item?.data?.[0]?.title}
                                         </h3>
                                         <div>
-                                            {item?.data?.[0]?.description.slice(0, 100)}
+                                            {item?.data?.[0]?.description?.slice?.(0, 100)}
                                         </div>
                                         <Link to={`/item/${item?.data?.[0]?.nasa_id}`}>open</Link>
                                         {/*<img src={item?.links?.[0]?.href}></img>*/}
