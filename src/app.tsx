@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {search} from './api';
+import {getById, search} from './api';
 import {
     createBrowserRouter,
     Link,
@@ -27,9 +27,24 @@ export function ItemPage(){
     const navigation = useNavigation();
     const params = useParams();
     console.log(navigation, params);
+    const [item, setItem] = useState<any>();
+    useEffect(()=>{
+        getById(params?.['id']).then((response)=>{
+            setItem(response);
+        });
+    }, [params?.['id']]);
     return <div>
         <Link to='/'>back</Link>
         item: {params?.['id']}
+        <div>
+            <h3>
+                {item?.data?.[0]?.title}
+            </h3>
+            <div>
+                {item?.data?.[0]?.description}
+            </div>
+            {<img src={item?.links?.[0]?.href}></img>}
+        </div>
     </div>
 }
 
@@ -63,7 +78,7 @@ export function MainPage(){
                                             {item?.data?.[0]?.title}
                                         </h3>
                                         <div>
-                                            {item?.data?.[0]?.description}
+                                            {item?.data?.[0]?.description.slice(0, 100)}
                                         </div>
                                         <Link to={`/item/${item?.data?.[0]?.nasa_id}`}>open</Link>
                                         {/*<img src={item?.links?.[0]?.href}></img>*/}
