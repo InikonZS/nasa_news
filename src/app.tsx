@@ -29,6 +29,9 @@ export function App(){
                                         <h3>
                                             {item?.data?.[0]?.title}
                                         </h3>
+                                        <div>
+                                            {item?.data?.[0]?.description}
+                                        </div>
                                         {/*<img src={item?.links?.[0]?.href}></img>*/}
                                     </div>
                                 )
