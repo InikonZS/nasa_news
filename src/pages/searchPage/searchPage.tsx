@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { IItem } from "./interfaces";
+import { IItem } from "../../interfaces";
 import { SearchItem } from './searchItem';
 import './searchForm.css';
-import { useAppDispatch, useAppSelector } from "./store";
-import { getData } from "./store";
+import { useAppDispatch, useAppSelector } from "../../store";
+import { getData } from "../../store";
 
 export function MainPage(){
     const [searchInput, setSearchInput] = useState('');

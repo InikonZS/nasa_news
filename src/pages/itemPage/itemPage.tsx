@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigation, useParams, Link } from "react-router-dom";
-import { getById } from "./api";
-import { IItem } from './interfaces';
+import { getById } from "../../api";
+import { IItem } from '../../interfaces';
 import './itemPage.css';
 
 /*title, location, photographer's

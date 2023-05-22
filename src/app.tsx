@@ -9,8 +9,8 @@ import {
 } from "react-router-dom";
 import "./style.css";
 
-import { MainPage } from './searchPage';
-import { ItemPage } from './itemPage';
+import { MainPage } from './pages/searchPage/searchPage';
+import { ItemPage } from './pages/itemPage/itemPage';
 import { Provider } from 'react-redux';
 import { store } from './store';
 

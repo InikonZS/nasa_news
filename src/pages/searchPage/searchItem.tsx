@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { IItem } from "./interfaces";
+import { IItem } from "../../interfaces";
 import './searchItem.css'
 
 export function SearchItem({item}: {item: IItem} ){
