@@ -1,3 +1,12 @@
+.searchResults_wrapper{
+    padding: 10px;
+}
+
+.searchResults_no{
+    display: flex;
+    justify-content: center;
+}
+
 .searchItem_wrapper{
     padding: 10px;
     margin: 5px;

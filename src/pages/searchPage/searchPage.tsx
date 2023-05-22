@@ -26,11 +26,11 @@ export function MainPage(){
         dispatch(getData({searchQuery:query?.searchQuery || '', page: query?.page || 1, yearStart: query?.yearStart, yearEnd: query?.yearEnd}));
     }, []);
 
-    return (<>
+    return (<div>
         <div className="search_wrapper">
             <div className="search_props">
                 <div className="search_query">
-                    <input value={searchInput} className="search_input" type="text" onChange={(e)=>{
+                    <input value={searchInput} placeholder="input search request" className="search_input" type="text" onChange={(e)=>{
                         setSearchInput(e.target.value);
                     }}/>
                 </div>
@@ -52,7 +52,7 @@ export function MainPage(){
                 dispatch(getData({searchQuery:searchInput, page, yearStart: yearStartInput, yearEnd: yearEndInput}));
             }}>search</button>
         </div>
-            <div>
+            <div className="searchResults_wrapper">
                 {
                     (()=>{
                         if (results && Array.isArray(results.items)){
@@ -60,16 +60,16 @@ export function MainPage(){
                                 return <SearchItem item={item} ></SearchItem>
                             })
                         } else {
-                            return 'no results'
+                            return <div className="searchResults_no">no results</div>
                         }
                     })()
                 }
             </div>
             <div>
                 {   <>
-                    <div>total {
+                    {/*<div>total {
                        Math.ceil((results?.metadata.total_hits || 0) / 100)
-                    }</div>
+                    }</div>*/}
                     {new Array(Math.ceil((results?.metadata?.total_hits || 0) / 100)).fill(null).map((_, index)=>{
                         return <button onClick={()=>{
                             dispatch(getData({searchQuery:searchInput, page: index + 1, yearStart: yearStartInput, yearEnd: yearEndInput}));
@@ -82,5 +82,5 @@ export function MainPage(){
                 }
             </div>
         
-    </>)
+    </div>)
 }

@@ -33,6 +33,10 @@
     outline: 3px solid #334;
 }
 
+.search_yearInput::placeholder{
+
+}
+
 .search_button{
     width: 100px;
     flex-shrink: 0;
@@ -41,6 +45,11 @@
     background: #88a;
     border-bottom-right-radius: 20px;
     border-top-right-radius: 20px;
+    background-image: url('../../assets/search_icon.svg');
+    background-repeat: no-repeat;
+    background-size: 25px;
+    background-position: 10px center;
+    padding-left: 30px;
 }
 
 .search_props{
