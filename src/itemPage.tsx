@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useNavigation, useParams, Link } from "react-router-dom";
 import { getById } from "./api";
 import { IItem } from './interfaces';
+import './itemPage.css';
+
+/*title, location, photographer's
+name, description, keywords, date*/
 
 export function ItemPage(){
     const navigation = useNavigation();
@@ -20,17 +24,35 @@ export function ItemPage(){
             setResources(res);
         });
     }, [item]);
-    return <div>
-        <Link to='/'>back</Link>
-        item: {params?.['id']}
+    return <div className="itemPage_wrapper">
+        <Link className="itemPage_backLink" to='/'>back</Link>
+        {/*item: {params?.['id']*/}
         <div>
             <h3>
                 {item?.data?.[0]?.title}
             </h3>
-            <div>
-                {item?.data?.[0]?.description}
+            <div className="itemPage_line">
+                <span className="itemPage_span">location:</span> <span>{item?.data?.[0]?.location}</span>
             </div>
-            {<img src={item?.links?.[0]?.href}></img>}
+            <div className="itemPage_line">
+                <span className="itemPage_span">date:</span> {item?.data?.[0]?.date_created}
+            </div>
+            <div className="itemPage_line">
+                <span className="itemPage_span">photographer:</span> {item?.data?.[0]?.photographer}
+            </div>
+            <div className="itemPage_line">
+                <span className="itemPage_span">keywords: </span>
+                <ul className="itemPage_keywords">
+                    {item?.data?.[0]?.keywords.map(word=>{
+                        return <li>{word}</li>
+                    })}
+                </ul>
+            </div>
+            
+            <div className="itemPage_description" dangerouslySetInnerHTML={{__html: item?.data?.[0]?.description}}>
+                {/*item?.data?.[0]?.description*/}
+            </div>
+            {<img className="itemPage_image" src={item?.links?.[0]?.href}></img>}
         </div>
         <div>
             {resources && resources.map(it=>{

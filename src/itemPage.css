@@ -1,0 +1,39 @@
+.itemPage_wrapper{
+    padding: 10px;
+}
+
+.itemPage_backLink{
+    display: flex;
+    background-color: #5c81c0;
+    color: #fff;
+    text-decoration: none;
+    width: 100px;
+    padding: 5px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 5px;
+    align-self: flex-end;
+}
+
+.itemPage_span{
+    color: #ff5500;
+    font-weight: bold;
+}
+
+.itemPage_line{
+    margin: 5px 0px;
+}
+
+.itemPage_keywords{
+    margin: 0;
+}
+
+.itemPage_image{
+    width: 100%;
+}
+
+.itemPage_description{
+    margin: 10px 0px;
+    text-align: justify;
+}

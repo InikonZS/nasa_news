@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { search } from "./api";
 import { IItem } from "./interfaces";
 import { SearchItem } from './searchItem';
 import './searchForm.css';
@@ -74,7 +72,8 @@ export function MainPage(){
                     }</div>
                     {new Array(Math.ceil((results?.metadata?.total_hits || 0) / 100)).fill(null).map((_, index)=>{
                         return <button onClick={()=>{
-                            setPage(index + 1);
+                            dispatch(getData({searchQuery:searchInput, page: index + 1, yearStart: yearStartInput, yearEnd: yearEndInput}));
+                            //setPage(index + 1);
                         }}>
                             {index + 1}
                         </button>
