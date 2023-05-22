@@ -4,21 +4,27 @@ import { search } from "./api";
 import { IItem } from "./interfaces";
 import { SearchItem } from './searchItem';
 import './searchForm.css';
+import { useAppDispatch, useAppSelector } from "./store";
+import { getData } from "./store";
 
 export function MainPage(){
     const [searchQuery, setSearchQuery] = useState('');
     const [searchInput, setSearchInput] = useState('');
     const [page, setPage] = useState(1);
-    const [results, setResults] = useState<any>();    
+    //const [results, setResults] = useState<any>();    
     const [yearStartInput, setYearStartInput] = useState<null | number>();
     const [yearEndInput, setYearEndInput] = useState<null | number>();
     const [yearStart, setYearStart] = useState<null | number>();
     const [yearEnd, setYearEnd] = useState<null | number>();
+    const results = useAppSelector((state=>state.search.value));
+    //console.log('results ', results);
+    const dispatch = useAppDispatch();
     useEffect(()=>{
-        search(searchQuery, page, yearStart, yearEnd).then((response)=>{
+        /*search(searchQuery, page, yearStart, yearEnd).then((response)=>{
             setResults(response.collection);
             console.log(response);
-        });
+        });*/
+        dispatch(getData({searchQuery, page, yearStart, yearEnd}));
     }, [searchQuery, page, yearStart, yearEnd]);
 
 

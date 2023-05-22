@@ -11,6 +11,8 @@ import "./style.css";
 
 import { MainPage } from './searchPage';
 import { ItemPage } from './itemPage';
+import { Provider } from 'react-redux';
+import { store } from './store';
 
 export function App(){
     const router = createBrowserRouter([
@@ -23,5 +25,8 @@ export function App(){
             element: <ItemPage />
         }
     ]);
-    return <RouterProvider router={router} />
+    return <Provider store={store}>
+        <RouterProvider router={router} />
+    </Provider>
+    
 }
