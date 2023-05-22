@@ -21,3 +21,10 @@ export interface IItem{
     href: string,
     links: IItemLink[]
 }
+
+export interface ISearchQuery{
+    searchQuery: string,
+    page: number,
+    yearStart: number,
+    yearEnd: number
+}
