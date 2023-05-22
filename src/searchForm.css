@@ -1,0 +1,62 @@
+.search_wrapper{
+    padding: 10px;
+    background-color: #223;
+    display: flex;
+}
+
+.search_input{
+    width: 100%;
+    background-color: #112;
+    border: none;
+    padding: 5px 20px;
+    margin: 3px;
+    display: block;
+    border-top-left-radius: 20px;
+    color: white;
+}
+
+.search_input:focus{
+    border: none;
+    outline: 3px solid #334;
+}
+
+.search_yearInput{
+    width: 100px;
+    display: block;
+    margin: 6px 15px;
+    border: none;
+    border-radius: 5px;
+    background: #223;
+}
+.search_yearInput:focus{
+    border: none;
+    outline: 3px solid #334;
+}
+
+.search_button{
+    width: 100px;
+    flex-shrink: 0;
+    display: block;
+    border: none;
+    background: #88a;
+    border-bottom-right-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.search_props{
+    width: 100%;
+    background-color: #112;
+    border-bottom-left-radius: 20px;
+    border-top-left-radius: 20px;
+}
+
+.search_query{
+    width: 100%;
+}
+
+.search_years{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+}

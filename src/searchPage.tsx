@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { search } from "./api";
 import { IItem } from "./interfaces";
+import { SearchItem } from './searchItem';
+import './searchForm.css';
 
 export function MainPage(){
     const [searchQuery, setSearchQuery] = useState('');
@@ -21,42 +23,39 @@ export function MainPage(){
 
 
     return (<>
-        <div>
-            <input type="text" onChange={(e)=>{
-                setSearchInput(e.target.value);
-            }}/>
-            <label htmlFor='year-start'>from year</label>
-            <input id='year-start' type="text" onChange={(e)=>{
-                console.log(Number.parseInt(e.target.value));
-                setYearStartInput(Number.parseInt(e.target.value));
-            }}/>
+        <div className="search_wrapper">
+            <div className="search_props">
+                <div className="search_query">
+                    <input className="search_input" type="text" onChange={(e)=>{
+                        setSearchInput(e.target.value);
+                    }}/>
+                </div>
+                <div className="search_years">
+                    <label htmlFor='year-start'>publication year from </label>
+                    <input className="search_yearInput" id='year-start' type="text" onChange={(e)=>{
+                        console.log(Number.parseInt(e.target.value));
+                        setYearStartInput(Number.parseInt(e.target.value));
+                    }}/>
 
-            <label htmlFor='year-end'>to year</label>
-            <input id='year-end' type="text" onChange={(e)=>{
-                setYearEndInput(Number.parseInt(e.target.value));
-            }}/>
-            <button onClick={()=>{
+                    <label htmlFor='year-end'>to </label>
+                    <input className="search_yearInput" id='year-end' type="text" onChange={(e)=>{
+                        setYearEndInput(Number.parseInt(e.target.value));
+                    }}/>  
+                </div>
+            </div>
+
+            <button className="search_button" onClick={()=>{
                 setSearchQuery(searchInput);
                 setYearEnd(yearEndInput);
                 setYearStart(yearStartInput);
             }}>search</button>
+        </div>
             <div>
                 {
                     (()=>{
                         if (results && Array.isArray(results.items)){
                             return results.items.map((item: IItem)=>{
-                                return (
-                                    <div>
-                                        <h3>
-                                            {item?.data?.[0]?.title}
-                                        </h3>
-                                        <div>
-                                            {item?.data?.[0]?.description?.slice?.(0, 100)}
-                                        </div>
-                                        <Link to={`/item/${item?.data?.[0]?.nasa_id}`}>open</Link>
-                                        {/*<img src={item?.links?.[0]?.href}></img>*/}
-                                    </div>
-                                )
+                                return <SearchItem item={item} ></SearchItem>
                             })
                         } else {
                             return 'no results'
@@ -79,6 +78,6 @@ export function MainPage(){
                     </>
                 }
             </div>
-        </div>
+        
     </>)
 }
