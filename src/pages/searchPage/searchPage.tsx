@@ -14,6 +14,11 @@ export function MainPage(){
     const query = useAppSelector(state=> state.search.query);
     console.log('query ', query);
     const dispatch = useAppDispatch();
+
+    const itemsPerPage = 10;
+    const totalPages = Math.ceil((results?.metadata?.total_hits || 10000) / itemsPerPage);
+    const currentPage = (query?.page || 1);
+
     useEffect(()=>{
         const h = ()=>{
             const isBottom = document.documentElement.scrollTop == document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -61,7 +66,7 @@ export function MainPage(){
             </div>
 
             <button className="search_button" onClick={()=>{
-                dispatch(getData({searchQuery:searchInput, page:query?.page || 1, yearStart: yearStartInput, yearEnd: yearEndInput}));
+                dispatch(getData({searchQuery:searchInput, page:1, yearStart: yearStartInput, yearEnd: yearEndInput}));
             }}>search</button>
         </div>
             <div className="searchResults_wrapper">
@@ -92,22 +97,22 @@ export function MainPage(){
                         </button>
                     })*/}
                     {<>
-                        <button className="pagination_button" onClick={()=>{
-                            if ((query.page || 1)>1){
-                                dispatch(getData({searchQuery:searchInput, page: (query?.page || 1) - 1, yearStart: yearStartInput, yearEnd: yearEndInput}));
+                        <button disabled={currentPage<=1} className="pagination_button" onClick={()=>{
+                            if (currentPage>1){
+                                dispatch(getData({searchQuery:searchInput, page: currentPage - 1, yearStart: yearStartInput, yearEnd: yearEndInput}));
                             }
-                        }}>{(query?.page || 1) - 1}</button>
+                        }}>{currentPage - 1}</button>
                         <div className="pagination_center">
-                            <input className="pagination_input" value={(query?.page || 1)} />
+                            <input className="pagination_input" value={currentPage} />
                             <div>/</div>
-                            <div className="pagination_total">{Math.ceil((results?.metadata?.total_hits || 10000) / 10)}</div> 
+                            <div className="pagination_total">{totalPages}</div> 
                         </div>
                         
-                        <button className="pagination_button" onClick={()=>{
-                            if ((query.page || 1) < Math.ceil((results?.metadata?.total_hits || 10000) / 10)){
-                                dispatch(getData({searchQuery:searchInput, page: (query?.page || 1) + 1, yearStart: yearStartInput, yearEnd: yearEndInput}));
+                        <button disabled={currentPage >= totalPages} className="pagination_button" onClick={()=>{
+                            if (currentPage < totalPages){
+                                dispatch(getData({searchQuery:searchInput, page: currentPage + 1, yearStart: yearStartInput, yearEnd: yearEndInput}));
                             }
-                        }}>{(query?.page || 1) + 1}</button>
+                        }}>{currentPage + 1}</button>
                     </>
                     }
                     </>
