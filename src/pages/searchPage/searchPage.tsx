@@ -44,8 +44,11 @@ export function MainPage(){
     }, []);
 
     return (<div>
-        <div className="search_wrapper">
-            <div className="search_props">
+        <form className="search_wrapper"onSubmit={(e)=>{
+                e.preventDefault();
+                dispatch(getData({searchQuery:searchInput, page:1, yearStart: yearStartInput, yearEnd: yearEndInput}));
+            }}>
+            <div className="search_props" >
                 <div className="search_query">
                     <input value={searchInput} placeholder="input search request" className="search_input" type="text" onChange={(e)=>{
                         setSearchInput(e.target.value);
@@ -65,10 +68,10 @@ export function MainPage(){
                 </div>
             </div>
 
-            <button className="search_button" onClick={()=>{
-                dispatch(getData({searchQuery:searchInput, page:1, yearStart: yearStartInput, yearEnd: yearEndInput}));
+            <button className="search_button"  type="submit" onClick={()=>{
+                //dispatch(getData({searchQuery:searchInput, page:1, yearStart: yearStartInput, yearEnd: yearEndInput}));
             }}>search</button>
-        </div>
+        </form>
             <div className="searchResults_wrapper">
                 {
                     (()=>{
