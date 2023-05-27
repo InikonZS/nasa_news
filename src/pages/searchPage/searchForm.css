@@ -50,6 +50,7 @@
     background-size: 25px;
     background-position: 10px center;
     padding-left: 30px;
+    cursor: pointer;
 }
 
 .search_props{
@@ -69,3 +70,36 @@
     justify-content: center;
     align-items: baseline;
 }
+
+.pagination_button{
+    display: block;
+}
+
+.pagination_button_active{
+
+}
+
+.pagination_center{
+    display: flex;
+}
+
+.pagination_input{
+    width: 50px;
+    display: block;
+    border: none;
+    border-radius: 5px;
+    background: #223; 
+    margin: 0px 8px;
+}
+
+.pagination_total{
+    margin: 0px 8px;
+}
+
+.pagination_wrapper{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 20px;
+}
+

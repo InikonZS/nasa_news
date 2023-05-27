@@ -7,7 +7,7 @@ import { getData } from "../../store";
 
 export function MainPage(){
     const [searchInput, setSearchInput] = useState('');
-    const [page, setPage] = useState(1); 
+    //const [page, setPage] = useState(1); 
     const [yearStartInput, setYearStartInput] = useState<null | number>();
     const [yearEndInput, setYearEndInput] = useState<null | number>();
     const results = useAppSelector((state=>state.search.value));
@@ -15,11 +15,23 @@ export function MainPage(){
     console.log('query ', query);
     const dispatch = useAppDispatch();
     useEffect(()=>{
+        const h = ()=>{
+            const isBottom = document.documentElement.scrollTop == document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            if (isBottom){
+                console.log(isBottom);
+            }
+        }
+        document.addEventListener('scroll', h);
+        return  ()=>{
+            document.removeEventListener('scroll', h);
+        }
+    });
+    useEffect(()=>{
         if (query){
             setSearchInput(query.searchQuery);
             setYearStartInput(query.yearStart);
             setYearEndInput(query.yearEnd);
-            setPage(query.page);
+            //setPage(query.page);
         }
     }, []);
     useEffect(()=>{
@@ -49,7 +61,7 @@ export function MainPage(){
             </div>
 
             <button className="search_button" onClick={()=>{
-                dispatch(getData({searchQuery:searchInput, page, yearStart: yearStartInput, yearEnd: yearEndInput}));
+                dispatch(getData({searchQuery:searchInput, page:query?.page || 1, yearStart: yearStartInput, yearEnd: yearEndInput}));
             }}>search</button>
         </div>
             <div className="searchResults_wrapper">
@@ -65,22 +77,43 @@ export function MainPage(){
                     })()
                 }
             </div>
-            <div>
+            {
+            (results && Array.isArray(results.items)) && <div className="pagination_wrapper">
                 {   <>
                     {/*<div>total {
                        Math.ceil((results?.metadata.total_hits || 0) / 100)
                     }</div>*/}
-                    {new Array(Math.ceil((results?.metadata?.total_hits || 0) / 100)).fill(null).map((_, index)=>{
-                        return <button onClick={()=>{
+                    {/*new Array(Math.ceil((results?.metadata?.total_hits || 10000) / 100)).fill(null).map((_, index)=>{
+                        return <button className={"pagination_button"+ ((index+1) == page?'pagination_button_active':'') } onClick={()=>{
                             dispatch(getData({searchQuery:searchInput, page: index + 1, yearStart: yearStartInput, yearEnd: yearEndInput}));
                             //setPage(index + 1);
                         }}>
                             {index + 1}
                         </button>
-                    })}
+                    })*/}
+                    {<>
+                        <button className="pagination_button" onClick={()=>{
+                            if ((query.page || 1)>1){
+                                dispatch(getData({searchQuery:searchInput, page: (query?.page || 1) - 1, yearStart: yearStartInput, yearEnd: yearEndInput}));
+                            }
+                        }}>{(query?.page || 1) - 1}</button>
+                        <div className="pagination_center">
+                            <input className="pagination_input" value={(query?.page || 1)} />
+                            <div>/</div>
+                            <div className="pagination_total">{Math.ceil((results?.metadata?.total_hits || 10000) / 10)}</div> 
+                        </div>
+                        
+                        <button className="pagination_button" onClick={()=>{
+                            if ((query.page || 1) < Math.ceil((results?.metadata?.total_hits || 10000) / 10)){
+                                dispatch(getData({searchQuery:searchInput, page: (query?.page || 1) + 1, yearStart: yearStartInput, yearEnd: yearEndInput}));
+                            }
+                        }}>{(query?.page || 1) + 1}</button>
+                    </>
+                    }
                     </>
                 }
             </div>
+            }
         
     </div>)
 }

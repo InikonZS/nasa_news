@@ -43,7 +43,7 @@ export function ItemPage(){
             <div className="itemPage_line">
                 <span className="itemPage_span">keywords: </span>
                 <ul className="itemPage_keywords">
-                    {item?.data?.[0]?.keywords.map(word=>{
+                    {item?.data?.[0]?.keywords?.map(word=>{
                         return <li>{word}</li>
                     })}
                 </ul>
